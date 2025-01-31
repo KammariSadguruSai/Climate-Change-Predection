@@ -2,11 +2,31 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import requests
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, r2_score
 
 st.title("🌍 Climate Change Prediction App")
+
+# GitHub raw link for the dataset
+url = 'https://raw.githubusercontent.com/KammariSadguruSai/Climate-Change-Predection/main/clean_climate_change_dataset.csv'
+
+# Load the dataset into a DataFrame
+df = pd.read_csv(url)
+
+# Display the dataset
+st.write("### Dataset Preview")
+st.dataframe(df.head())
+
+# Create a download button
+csv = df.to_csv(index=False)  # Convert dataframe to CSV
+st.download_button(
+    label="Download Dataset",
+    data=csv,
+    file_name="clean_climate_change_dataset.csv",
+    mime="text/csv"
+)
 
 # Upload dataset
 uploaded_file = st.file_uploader("Upload your Climate Dataset (CSV)", type=["csv"])
